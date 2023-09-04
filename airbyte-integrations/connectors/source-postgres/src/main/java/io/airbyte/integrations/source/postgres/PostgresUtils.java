@@ -166,16 +166,13 @@ public class PostgresUtils {
     return isXmin;
   }
 
-  public static boolean isIncrementalSyncMode(final ConfiguredAirbyteCatalog catalog) {
+  public static boolean isAnyStreamIncrementalSyncMode(final ConfiguredAirbyteCatalog catalog) {
     return catalog.getStreams().stream().map(ConfiguredAirbyteStream::getSyncMode)
         .anyMatch(syncMode -> syncMode == SyncMode.INCREMENTAL);
   }
 
   public static String prettyPrintConfiguredAirbyteStreamList(final List<ConfiguredAirbyteStream> streamList) {
-    return streamList.
-        stream().
-        map(s -> "%s.%s".formatted(s.getStream().getNamespace(), s.getStream().getName())).
-        collect(Collectors.joining(", "));
+    return streamList.stream().map(s -> "%s.%s".formatted(s.getStream().getNamespace(), s.getStream().getName())).collect(Collectors.joining(", "));
   }
 
 }

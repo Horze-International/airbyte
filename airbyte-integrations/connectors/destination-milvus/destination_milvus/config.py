@@ -6,9 +6,11 @@ from typing import Literal, Optional, Union
 
 import dpath.util
 from airbyte_cdk.destinations.vector_db_based.config import (
+    AzureOpenAIEmbeddingConfigModel,
     CohereEmbeddingConfigModel,
     FakeEmbeddingConfigModel,
     FromFieldEmbeddingConfigModel,
+    OpenAICompatibleEmbeddingConfigModel,
     OpenAIEmbeddingConfigModel,
     ProcessingConfigModel,
 )
@@ -72,7 +74,12 @@ class MilvusIndexingConfigModel(BaseModel):
 class ConfigModel(BaseModel):
     processing: ProcessingConfigModel
     embedding: Union[
-        OpenAIEmbeddingConfigModel, CohereEmbeddingConfigModel, FakeEmbeddingConfigModel, FromFieldEmbeddingConfigModel
+        OpenAIEmbeddingConfigModel,
+        CohereEmbeddingConfigModel,
+        FakeEmbeddingConfigModel,
+        FromFieldEmbeddingConfigModel,
+        AzureOpenAIEmbeddingConfigModel,
+        OpenAICompatibleEmbeddingConfigModel,
     ] = Field(..., title="Embedding", description="Embedding configuration", discriminator="mode", group="embedding", type="object")
     indexing: MilvusIndexingConfigModel
 
